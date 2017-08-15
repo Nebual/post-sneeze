@@ -1,0 +1,3 @@
+#this stuff is only relevent when you doing local dev with mongodb
+data
+!data/.gitkeep

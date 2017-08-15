@@ -1,0 +1,18 @@
+{
+  "name": "map",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node srv/app.js",
+    "mongo": "mongod --dbpath=./data --port 27017"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^2.2.31",
+    "seneca-mesh": "^0.11.0",
+    "seneca-parambulator": "^0.3.0",
+    "uuid": "^3.1.0"
+  }
+}
