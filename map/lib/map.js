@@ -7,11 +7,22 @@ module.exports = function map(opts) {
 
     const MONGO_URL = 'mongodb://localhost:27017/mapper'
 
+    /**
+     * Add point of interest to the game world
+     * @param {string} name - the human friendly name of the point
+     * @param {string} game_type - the type of the point in the game
+     * @param {number} lon - longitude of the point
+     * @param {number} lat - latitude of the point
+     */
     seneca.add({
         domain: 'map',
         role: 'api',
         cmd: 'addPoint',
         name: {
+            required$: true,
+            type$: 'string'
+        },
+        game_type: {
             required$: true,
             type$: 'string'
         },
@@ -40,19 +51,48 @@ module.exports = function map(opts) {
         mc.connect(MONGO_URL, (err, db) => {
             const collection = db.collection('poi')
 
-            collection.insertOne(newPoint, (err, result) => {
+            collection.insertOne(newPoint, (err) => {
                 if (err) {
-                    console.log(err)
+                    db.close()
+                    return done(err)
                 }
 
-                console.log('document inserted')
-                console.log(result)
-
                 db.close()
-                done()
+                done(null, {id: result.id})
             })
 
         })
+    })
+
+    /**
+     * Remove point from the game world
+     * @param {string} id - the unique identifier for the point
+     */
+    seneca.add({
+        domain: 'map',
+        role: 'api',
+        cmd: 'removePoint',
+        id: {
+            required$: true,
+            type$: 'string'
+        }
+    }, (msg, done) => {
+        const {id} = msg
+
+        mc.connect(MONGO_URL, (err, db) => {
+            const collection = db.collection('poi')
+
+            collection.deleteOne({id}, (err) => {
+                if (err) {
+                    db.close()
+                    return done(err)
+                }
+
+                db.close()
+                done(null, {success: true})
+            })
+        })
+
     })
 
 }
