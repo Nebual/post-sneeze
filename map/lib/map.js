@@ -121,7 +121,13 @@ module.exports = function map(opts) {
         mc.connect(MONGO_URL, (err, db) => {
             const collection = db.collection('poi')
 
-            collection.find({"loc": {$geoWithin: { $centerSphere: [[lon, lat], 10/3963.2]}}}).toArray((err, docs) => {
+            collection.find(
+                {loc: {$near: {
+                    $geometry: {type: "Point", coordinates:[lon, lat]},
+                    $minDistance: 0,
+                    $maxDistance: 1000
+                }}}
+                ).toArray((err, docs) => {
                 db.close()
 
                 if (err) {

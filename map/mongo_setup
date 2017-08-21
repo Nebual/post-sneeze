@@ -1,0 +1,2 @@
+//this is to create the geospatial index on the points of interest
+db.poi.createIndex({loc: "2dsphere"})
