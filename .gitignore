@@ -1,0 +1,41 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Compiled binary addons (http://nodejs.org/api/addons.html)
+build/Release
+
+node_modules/
+jspm_packages/
+typings/
+.npm
+.eslintcache
+.node_repl_history
+*.tgz
+
+# User-specific stuff:
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/dictionaries
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.xml
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/gradle.xml
+.idea/**/libraries
+.idea/**/mongoSettings.xml
+
+.idea

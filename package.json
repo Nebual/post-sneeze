@@ -1,0 +1,18 @@
+{
+  "name": "post-sneeze",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"who needs tests? its fine\" && exit 0",
+    "start": "node basenode.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "seneca": "^3.4.2",
+    "seneca-auth": "^1.1.0",
+    "seneca-balance-client": "^0.6.1",
+    "seneca-mesh": "^0.11.0"
+  }
+}
