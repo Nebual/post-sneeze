@@ -1,8 +1,11 @@
+const ip = require('ip');
 const db = require('./db')
 const seneca = require('seneca')()
 seneca
     .use('mesh', {
         pin: 'role:users',
+        bases: ['192.168.0.162:27074'],
+        host: ip.address(),
     })
     .use('parambulator')
     .add({role: 'users',
