@@ -11,12 +11,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
     "ip": "^1.1.5",
     "pg": "^7.1.2",
     "seneca": "^3.4.2",
     "seneca-auth": "^1.1.0",
     "seneca-balance-client": "^0.6.1",
     "seneca-mesh": "^0.11.0",
-    "seneca-parambulator": "^0.3.0"
+    "seneca-parambulator": "^0.3.0",
+    "seneca-web": "^2.1.0",
+    "seneca-web-adapter-express": "^1.0.2"
   }
 }
