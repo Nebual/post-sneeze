@@ -100,7 +100,7 @@ module.exports = function map(opts) {
      */
     seneca.add({
         domain: 'map',
-        role: 'web',
+        role: 'api',
         cmd: 'getPoints',
         lon: {
             required$: true,
