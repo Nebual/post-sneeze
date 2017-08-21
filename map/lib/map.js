@@ -52,13 +52,12 @@ module.exports = function map(opts) {
             const collection = db.collection('poi')
 
             collection.insertOne(newPoint, (err) => {
+                db.close()
                 if (err) {
-                    db.close()
                     return done(err)
                 }
 
-                db.close()
-                done(null, {id: result.id})
+                done({id: result.id})
             })
 
         })
@@ -83,16 +82,85 @@ module.exports = function map(opts) {
             const collection = db.collection('poi')
 
             collection.deleteOne({id}, (err) => {
+                db.close()
                 if (err) {
-                    db.close()
                     return done(err)
                 }
 
-                db.close()
-                done(null, {success: true})
+                done({success: true})
             })
         })
 
+    })
+
+    /**
+     * Get all nearby points
+     * @param {number} lon - longitude of the client
+     * @param {number} lat - latitude of the client
+     */
+    seneca.add({
+        domain: 'map',
+        role: 'web',
+        cmd: 'getPoints',
+        lon: {
+            required$: true,
+            type$: 'number',
+            min$: -180,
+            max$: 180
+        },
+        lat: {
+            required$: true,
+            type$: 'number',
+            min$: -90,
+            max$: 90
+        }
+    }, (msg, done) => {
+        const {lon, lat} = msg
+        mc.connect(MONGO_URL, (err, db) => {
+            const collection = db.collection('poi')
+
+            collection.find({$geoWithin: { $centerSphere: [[lon, lat], 10/3963.2]}}).toArray((err, docs) => {
+                db.close()
+
+                if (err) {
+                    return done(err)
+                }
+
+
+                done({poi: docs})
+            })
+        })
+    })
+
+    /**
+     * Validate that a client is within range of a point
+     * @param {number} lon - longitude of the client
+     * @param {number} lat - latitude of the client
+     * @param {string} id - the identifier for the point your validating against
+     */
+    seneca.add({
+        domain: 'map',
+        role: 'api',
+        cmd: 'checkDistance',
+        lon: {
+            required$: true,
+            type$: 'number',
+            min$: -180,
+            max$: 180
+        },
+        lat: {
+            required$: true,
+            type$: 'number',
+            min$: -90,
+            max$: 90
+        },
+        id: {
+            required$: true,
+            type$: 'string'
+        }
+    }, (msg, done) => {
+        //TODO add more stuff so this works
+        done()
     })
 
 }
