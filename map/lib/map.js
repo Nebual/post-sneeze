@@ -44,8 +44,10 @@ module.exports = function map(opts) {
         const newPoint = {
             id: uuid(),
             name: name,
-            type: 'Point',
-            coordinates: [lon, lat]
+            loc:{
+                type: 'Point',
+                coordinates: [lon, lat]
+            }
         }
 
         mc.connect(MONGO_URL, (err, db) => {
@@ -119,7 +121,7 @@ module.exports = function map(opts) {
         mc.connect(MONGO_URL, (err, db) => {
             const collection = db.collection('poi')
 
-            collection.find({$geoWithin: { $centerSphere: [[lon, lat], 10/3963.2]}}).toArray((err, docs) => {
+            collection.find({"loc": {$geoWithin: { $centerSphere: [[lon, lat], 10/3963.2]}}}).toArray((err, docs) => {
                 db.close()
 
                 if (err) {
